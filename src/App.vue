@@ -1,11 +1,40 @@
 <template>
   <v-app>
-    <h1>PROYECTO FINAL Tercera Entrega 3</h1>
+    <v-main>
+      <router-view class="" />
+    </v-main>
   </v-app>
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'App',
+
+  data: () => ({
+    //
+  }),
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>
