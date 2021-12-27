@@ -15,28 +15,37 @@
             <v-list-item-title> Inicio </v-list-item-title>
           </v-list-item>
         </template>
-        <template>
+        <template v-if="esAdministrador">
           <v-list-group>
-            <v-list-title slot="activator">
-              <v-list-content>
-                <v-list-item-title> Panel de Administración</v-list-item-title>
-              </v-list-content>
-            </v-list-title>
+            <v-list-item slot="activator">
+              <v-list-item>
+                <v-list-item-title> PANEL DE ADMIN</v-list-item-title>
+              </v-list-item>
+            </v-list-item>
             <v-list-item :to="{ name: 'Productos' }">
               <v-list-item-action>
                 <v-icon>table_chart</v-icon>
               </v-list-item-action>
-              <v-list-content>
+              <v-list-item>
                 <v-list-item-title> Productos </v-list-item-title>
-              </v-list-content>
+              </v-list-item>
+            </v-list-item>
+          </v-list-group>
+        </template>
+        <template v-if="esAdministrador || esCliente">
+          <v-list-group>
+            <v-list-item slot="activator">
+              <v-list-item>
+                <v-list-item-title> VER CARRITO</v-list-item-title>
+              </v-list-item>
             </v-list-item>
             <v-list-item :to="{ name: 'Carrito' }">
               <v-list-item-action>
                 <v-icon>table_chart</v-icon>
               </v-list-item-action>
-              <v-list-content>
+              <v-list-item>
                 <v-list-item-title> Carrito </v-list-item-title>
-              </v-list-content>
+              </v-list-item>
             </v-list-item>
           </v-list-group>
         </template>
@@ -89,41 +98,21 @@
         <v-icon v-else>fas fa-shopping-bag</v-icon>
       </v-btn>
 
-      <v-btn
-        @click.prevent="toDrawer"
-        class="cart-button mb-6 mx-10 mt-8"
-        icon
-        color="white"
-      >
-        <v-icon>fas </v-icon>
-      </v-btn>
-
       <v-toolbar-title class="title mb-6 mt-8 ml-6 white--text">{{
         email
       }}</v-toolbar-title>
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="mb-5 mt-5" icon v-bind="attrs" v-on="on">
-            <v-icon color="white">mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item
-            class="mb-6 mt-8"
-            v-for="n in 1"
-            :key="n"
-            @click="() => {}"
-          >
-            <v-list-item-title @click="logout">Logout</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <template>
+        <v-btn @click="logout" class="mx-6" color="blue">
+          <v-icon>mdi-logout</v-icon> Salir
+        </v-btn>
+      </template>
     </v-app-bar>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Navbar',
   data() {
@@ -134,9 +123,6 @@ export default {
   methods: {
     toCarrito() {
       this.$store.dispatch('toCarrito');
-    },
-    toDrawer() {
-      this.$store.dispatch('toDrawer');
     },
     toHome() {
       this.$store.dispatch('toHome');
@@ -152,7 +138,26 @@ export default {
     numberOfItem() {
       return this.$store.state.carts.length;
     },
+    esAdministrador() {
+      return (
+        this.$store.getters.usuario &&
+        this.$store.getters.usuario.rol === 'Administrador'
+      );
+    },
+    esCliente() {
+      return (
+        this.$store.getters.usuario &&
+        this.$store.getters.usuario.rol === 'Cliente'
+      );
+    },
+    ...mapGetters(['usuario']),
   },
+
+  /* mounted() {
+    this.$store.dispatch('loginCheck');
+
+    console.log('rol', this.$store.getters.usuario.rol);
+  }, */
 };
 </script>
 

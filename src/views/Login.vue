@@ -2,10 +2,11 @@
   <v-layout id="login" align-center justify-center>
     <div class="wrapper-test">
       <div class="message"></div>
-      <v-form @submit.prevent="login" method="post" class="form-signin">
+      <v-form ref="form" v-model="valid" lazy-validation class="form-signin">
         <h2 class="form-signin-heading text-center">Login</h2>
         <v-text-field
           v-model="email"
+          :rules="emailRules"
           autofocus
           color="accent"
           label="Email"
@@ -14,6 +15,7 @@
         </v-text-field>
         <v-text-field
           v-model="password"
+          :rules="passwordRules"
           type="password"
           color="accent"
           label="Password"
@@ -25,13 +27,23 @@
         <v-spacer></v-spacer>
         <div class="mt-8">
           No tienes una cuenta?
-          <a href="" @click.prevent="toRegister">Registrate</a>
+          <a href="" @click.prevent="toRegister">Registrarse</a>
         </div>
         <v-spacer></v-spacer>
         <div class="mt-8">
           <a href="" @click.prevent="toHome">Página Principal</a>
         </div>
       </v-form>
+      <template>
+        <div class="mt-8">
+          <v-alert v-if="!alerta" :value="alerta" type="success">
+            {{ textoAlerta }}
+          </v-alert>
+          <v-alert v-else :value="alertaError" type="error">
+            {{ textoAlerta }}
+          </v-alert>
+        </div>
+      </template>
     </div>
   </v-layout>
 </template>
@@ -42,8 +54,26 @@ export default {
 
   data() {
     return {
+      valid: false,
+
+      emailRules: [
+        (v) => !!v || 'E-mail es requerido',
+        (v) => /.+@.+\..+/.test(v) || 'El email debe ser válido',
+      ],
+
+      passwordRules: [
+        (v) => !!v || 'La contraseña es Requerida',
+        (v) =>
+          (v && v.length <= 15) ||
+          'La contraseña debe tener como máximo 15 caracteres',
+      ],
+
       email: '',
       password: '',
+      errorM: null,
+      textoAlerta: '',
+      alerta: false,
+      alertaError: false,
     };
   },
   methods: {
@@ -54,10 +84,48 @@ export default {
       this.$store.dispatch('toHome');
     },
     login() {
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password,
-      });
+      if (this.$refs.form.validate()) {
+        this.alerta = true;
+        this.mostrarAlerta('Se logueó correctamente');
+      } else {
+        this.alertaError = true;
+        this.mostrarAlerta('Completar todos los campos');
+      }
+
+      if (this.email == 'a@a.com' && this.password == 'admin') {
+        this.$emit('authenticated', true);
+
+        const newAdmin = {
+          email: this.email,
+          password: this.password,
+          token: this.email + this.password,
+          rol: 'Administrador',
+        };
+
+        localStorage.setItem('Usuario', JSON.stringify(newAdmin));
+        this.$store.dispatch('guardarUsuario', newAdmin);
+      } else if (this.email == 'c@c.com' && this.password == 'cliente') {
+        this.$emit('authenticatedCliente', true);
+        // this.$router.replace({ name: 'Home' });
+        const newCliente = {
+          email: this.email,
+          password: this.password,
+          token: this.email + this.password,
+          rol: 'Cliente',
+        };
+        localStorage.setItem('Usuario', JSON.stringify(newCliente));
+        this.$store.dispatch('guardarUsuario', newCliente);
+      } else {
+        this.alertaError = true;
+        this.mostrarAlerta('El email y contraseña  son incorrectos');
+      }
+    },
+    mostrarAlerta(texto) {
+      this.textoAlerta = texto;
+      setTimeout(() => {
+        this.alerta = false;
+        this.alertaError = false;
+      }, 1300);
     },
   },
 };

@@ -4,7 +4,7 @@
     <div>
       <v-data-table
         :headers="headers"
-        :items="products"
+        :items="productos"
         :search="search"
         sort-by="nombre"
         class="elevation-1"
@@ -44,26 +44,26 @@
                 <v-card-text>
                   <v-container>
                     <v-row>
-                      <v-col cols="12" sm="6" md="6">
-                        <v-text-field v-model="id" label="Id"></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="6">
-                        <v-select v-model="nombre" label="Nombre"></v-select>
-                      </v-col>
-
                       <v-col cols="12" sm="12" md="12">
                         <v-text-field
-                          type="number"
-                          v-model="precio"
-                          label="Precio"
+                          v-model="nombre"
+                          label="Nombre"
                         ></v-text-field>
                       </v-col>
+
                       <v-col cols="12" sm="6" md="6">
                         <v-text-field
                           type="number"
                           v-model="cantidad"
                           label="Cantidad"
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          type="number"
+                          v-model="precio"
+                          label="Precio"
                         ></v-text-field>
                       </v-col>
 
@@ -84,11 +84,7 @@
                   <v-btn color="blue darken-1" text @click="close">
                     Cancelar
                   </v-btn>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="guardarItemActualizado"
-                  >
+                  <v-btn color="blue darken-1" text @click="guardar">
                     Guardar
                   </v-btn>
                 </v-card-actions>
@@ -124,7 +120,7 @@
         </template>
 
         <template v-slot:no-data>
-          <v-btn color="#0d47a1" @click="listar()"> Resetear </v-btn>
+          <v-label color="#0d47a1"> No hay datos en la tabla</v-label>
         </template>
       </v-data-table>
     </div>
@@ -133,6 +129,8 @@
 
 <script>
 import Navbar from '../components/Navbar.vue';
+import { mapState, mapGetters } from 'vuex';
+import axios from 'axios';
 
 export default {
   components: {
@@ -141,7 +139,7 @@ export default {
   data: () => ({
     dialog: false,
     search: '',
-    productos: [],
+
     dialogDelete: false,
     headers: [
       { text: 'Actions', value: 'actions', sortable: false },
@@ -168,9 +166,13 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Nuevo producto' : 'Editar producto';
     },
-    products() {
-      return this.$store.state.products;
-    },
+    /* productos() {
+      return this.$store.state.productos;
+    }, */
+    ...mapState({
+      productos: (state) => state.productos,
+    }),
+    ...mapGetters(['productos']),
   },
 
   watch: {
@@ -188,25 +190,23 @@ export default {
 
   methods: {
     editItem(item) {
-      this.idarticulo = item.idarticulo;
-      this.categoria = item.idcategoria;
       this.id = item.id;
       this.nombre = item.nombre;
-      this.descripcion = item.descripcion;
-      this.stock = item.stock;
-      this.precio_venta = item.precio_venta;
+      this.cantidad = item.cantidad;
+      this.precio = item.precio;
+
       this.dialog = true;
       this.editedIndex = 1;
     },
 
     eliminarItem(item) {
       this.dialogDelete = true;
+      this.id = item.id;
       console.log(item, `abrir dialog de eliminar item`);
     },
 
     limpiar() {
-      this.idarticulo = '';
-      this.idcategoria = '';
+      this.id = '';
       this.nombre = '';
       this.cantidad = 0;
       this.precio = 0;
@@ -217,14 +217,7 @@ export default {
     validar() {
       this.valida = 0;
       this.validaMensaje = [];
-      if (!this.categoria) {
-        this.validaMensaje.push('Seleccione una categoria');
-      }
-      /* if (this.codigo.length < 1 || this.codigo.length > 64) {
-        this.validaMensaje.push('El código no debe tener más de 64 caracteres');
-        this.valida = 1;
-        return this.valida;
-      } */
+
       if (this.nombre.length < 1 || this.nombre.length > 50) {
         this.validaMensaje.push(
           'El nombre del articulo debe tener entre 1 y 50 caracteres'
@@ -232,18 +225,14 @@ export default {
         this.valida = 1;
         return this.valida;
       }
-      if (this.descripcion.length < 1 || this.descripcion.length > 255) {
-        this.validaMensaje.push(
-          'La descripción del articulo no debe tener más 255 caracteres'
-        );
-      }
-      if (this.stock < 0) {
-        this.validaMensaje.push('Ingrese un stock válido');
+      if (this.cantidad < 0) {
+        this.validaMensaje.push('Ingrese una cantidad válida mayor a 0');
         this.valida = 1;
         return this.valida;
       }
-      if (this.precio_venta < 0) {
-        this.validaMensaje.push('Ingrese un precio de venta válido');
+
+      if (this.precio < 0) {
+        this.validaMensaje.push('Ingrese un precio válido mayor a 0');
         this.valida = 1;
         return this.valida;
       }
@@ -253,33 +242,75 @@ export default {
       return this.valida;
     },
 
-    activarDesactivarMostrar(accion, item) {
-      this.adModal = 1;
-      this.adNombre = item.nombre;
-      this.adId = item.idarticulo;
-      if (accion === 1) {
-        this.adAccion = 1;
-      } else if (accion == 2) {
-        this.adAccion = 2;
+    listar() {
+      this.$store.dispatch('obtenerProductos');
+    },
+    guardar() {
+      let me = this;
+      // let header = { Token: this.$store.state.token };
+      // let configuracion = { headers: header };
+      if (this.validar()) {
+        return;
+      }
+      if (this.editedIndex > -1) {
+        //Código para editar
+        axios
+          .put(
+            `https://61b0b20e3c954f001722a59e.mockapi.io/productos/${this.id}`,
+            {
+              nombre: this.nombre,
+              precio: parseInt(this.precio),
+              cantidad: parseInt(this.cantidad),
+            }
+            /* configuracion */
+          )
+          .then(function () {
+            me.limpiar();
+            me.close();
+            me.listar();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       } else {
-        this.adModal = 0;
+        //Código para guardar
+        axios
+          .post(
+            'https://61b0b20e3c954f001722a59e.mockapi.io/productos/',
+            {
+              nombre: this.nombre,
+              cantidad: parseInt(this.cantidad),
+              precio: parseInt(this.precio),
+            }
+            //configuracion
+          )
+          .then(function () {
+            me.limpiar();
+            me.close();
+            me.listar();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     },
 
-    activarDesactivarCerrar() {
-      this.adModal = 0;
-    },
-
-    guardarItemActualizado() {
-      //this.categorias.splice(this.editedIndex, 1);
-      console.log('item actualizado');
-      this.close();
-    },
-
     deleteItemConfirm() {
-      //this.categorias.splice(this.editedIndex, 1);
-      console.log('item eliminado');
-      this.closeDelete();
+      let me = this;
+      axios
+        .delete(
+          `https://61b0b20e3c954f001722a59e.mockapi.io/productos/${this.id}`
+
+          /* configuracion */
+        )
+        .then(function () {
+          me.limpiar();
+          me.closeDelete();
+          me.listar();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
 
     close() {

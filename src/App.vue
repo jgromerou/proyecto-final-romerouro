@@ -9,10 +9,25 @@
 <script>
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
+  mounted() {
+    this.$store.dispatch('loginCheck');
+  },
+  /* beforeMount() {
+    window.addEventListener('load', this.onLoad);
+    window.addEventListener('beforeunload', this.onUnload);
+  },
+  beforeDestroy() {
+    window.removeEventListener('load', this.onLoad);
+    window.removeEventListener('beforeunload', this.onUnload);
+  }, */
+  /* methods: {
+    onLoad() {
+      window.localStorage.clear();
+    },
+    onUnload() {
+      window.localStorage.clear();
+    },
+  }, */
 };
 </script>
 

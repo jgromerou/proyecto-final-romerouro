@@ -1,49 +1,46 @@
 <template>
-  <section id="register" style="overflow: hidden">
+  <v-layout id="register" align-center justify-center>
     <div class="wrapper-test">
       <div class="message"></div>
-      <form @submit.prevent="register" method="post" class="form-signin">
-        <h2 class="form-signin-heading text-center">Register</h2>
-        <label for="email">Email</label>
-        <input
-          v-model="email"
-          id="email-register"
-          type="text"
-          class="form-control"
-          name="email"
-          placeholder="eg: example@email.com"
-          required
+      <v-form ref="form" v-model="valid" lazy-validation class="form-signin">
+        <h2 class="form-signin-heading text-center">Registrarse</h2>
+        <v-text-field
+          v-model="nombre"
+          :rules="nombreRules"
           autofocus
-        />
-
-        <label for="email">Password</label>
-        <input
+          color="accent"
+          label="Nombre"
+          required
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          color="accent"
+          label="Email"
+          required
+        >
+        </v-text-field>
+        <v-text-field
           v-model="password"
-          id="password-register"
+          :rules="passwordRules"
           type="password"
-          class="form-control"
-          name="password"
-          placeholder="Sssstttt"
+          color="accent"
+          label="Password"
           required
-        />
-        <label for="email">Confirm Password</label>
-        <input
-          v-model="confirmpassword"
-          id="confirmpassword-register"
-          type="password"
-          class="form-control"
-          name="confirmpassword"
-          placeholder="Re-enter password"
-          required
-        />
-        <button class="btn btn-lg btn-primary btn-block">Register</button>
+        >
+        </v-text-field>
+        <v-btn class="btn lg primary block" @click="register()"
+          >Registrarse</v-btn
+        >
+        <v-spacer></v-spacer>
         <small>
-          Already have an account?
+          Ya tienes una cuenta?
           <a href="" @click.prevent="toLogin">Login</a>
         </small>
-      </form>
+      </v-form>
     </div>
-  </section>
+  </v-layout>
 </template>
 
 <script>
@@ -51,9 +48,33 @@ export default {
   name: 'Register',
   data() {
     return {
+      valid: false,
+
+      nombreRules: [
+        (v) => !!v || 'El Nombre es requerido',
+        (v) =>
+          (v && v.length <= 20) ||
+          'El Nombre debe tener como máximo 20 caracteres',
+      ],
+
+      emailRules: [
+        (v) => !!v || 'E-mail es requerido',
+        (v) => /.+@.+\..+/.test(v) || 'El email debe ser válido',
+      ],
+
+      passwordRules: [
+        (v) => !!v || 'La contraseña es Requerida',
+        (v) =>
+          (v && v.length <= 15) ||
+          'La contraseña debe tener como máximo 15 caracteres',
+      ],
+      nombre: '',
       email: '',
       password: '',
-      confirmpassword: '',
+      errorM: null,
+      textoAlerta: '',
+      alerta: false,
+      alertaError: false,
     };
   },
   methods: {
@@ -61,11 +82,26 @@ export default {
       this.$store.dispatch('toLogin');
     },
     register() {
-      this.$store.dispatch('register', {
-        email: this.email,
-        password: this.password,
-        confirmpassword: this.confirmpassword,
-      });
+      if (this.$refs.form.validate()) {
+        this.alerta = true;
+        this.mostrarAlerta('Se registró correctamente');
+        this.$store.dispatch('register', {
+          usuario: this.nombre,
+          email: this.email,
+          password: this.password,
+        });
+      } else {
+        this.alertaError = true;
+        this.mostrarAlerta('Completar todos los campos');
+      }
+    },
+
+    mostrarAlerta(texto) {
+      this.textoAlerta = texto;
+      setTimeout(() => {
+        this.alerta = false;
+        this.alertaError = false;
+      }, 2000);
     },
   },
 };

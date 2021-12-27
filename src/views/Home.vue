@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="container">
-      <div class="container banner">
+      <div class="container banner" v-if="!isLogin">
         <div class="row giveaway-banner">
           <div class="banner-text" style="padding-left: 0px; color: white">
             <h1 class="font-weight-black display-1">REGISTRARSE ES FACIL!</h1>
@@ -75,6 +75,7 @@ import Navbar from '../components/Navbar';
 import NavbarLogout from '../components/NavbarLogout';
 import Card from '../components/productCard';
 import Footer from '../components/Footer';
+import { mapState } from 'vuex';
 export default {
   name: 'Home',
   components: {
@@ -105,11 +106,11 @@ export default {
     loginStatus() {
       return this.$store.state.isLogin;
     },
-    /* products() {
-      return this.$store.state.products;
+    /* productos() {
+      return this.$store.state.productos;
     }, */
     buscarProductos() {
-      return this.$store.state.products.filter((p) => {
+      return this.$store.state.productos.filter((p) => {
         return p.nombre.toLowerCase().indexOf(this.buscar.toLowerCase()) != -1;
       });
     },
@@ -119,11 +120,19 @@ export default {
     carts() {
       return this.$store.state.carts;
     },
+    ...mapState({
+      isLogin: (state) => state.isLogin,
+    }),
+    /* ...mapState({
+      productos: (state) => state.productos,
+      //cargandoCarrito: (state) => state.cargandoCarrito,
+    }), */
+    //...mapGetters(['productos']),
   },
   mounted() {
     this.$store.dispatch('obtenerProductos');
     this.$store.dispatch('obtenerCarrito');
-    this.$store.dispatch('loginCheck');
+    //this.$store.dispatch('loginCheck');
   },
 };
 </script>

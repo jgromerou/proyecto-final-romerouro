@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import store from '../store/index';
 
 Vue.use(VueRouter);
 
@@ -8,6 +9,9 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    meta: {
+      requiresAuth: true,
+    },
     component: Home,
   },
   {
@@ -21,6 +25,9 @@ const routes = [
   },
   {
     path: '/login',
+    meta: {
+      requiresAuth: true,
+    },
     name: 'Login',
     component: () => import('../views/Login.vue'),
   },
@@ -30,19 +37,21 @@ const routes = [
     component: () => import('../views/Register.vue'),
   },
   {
-    path: '/carrito',
-    name: 'Carrito',
-    component: () => import('../views/Carrito.vue'),
-  },
-  {
-    path: '/drawer',
-    name: 'Drawer',
-    component: () => import('../views/Drawer.vue'),
-  },
-  {
     path: '/productos',
+    meta: {
+      administrador: true,
+    },
     name: 'Productos',
     component: () => import('../views/Productos.vue'),
+  },
+  {
+    path: '/carrito',
+    meta: {
+      administrador: true,
+      cliente: true,
+    },
+    name: 'Carrito',
+    component: () => import('../views/Carrito.vue'),
   },
 ];
 
@@ -50,6 +59,36 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+/* router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!store.getters.isLogin) {
+      next({ name: 'Login' });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+}); */
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    next();
+  } else if (
+    store.state.usuario &&
+    store.state.usuario.rol == 'Administrador'
+  ) {
+    if (to.matched.some((record) => record.meta.administrador)) {
+      next();
+    }
+  } else if (store.state.usuario && store.state.usuario.rol == 'Cliente') {
+    if (to.matched.some((record) => record.meta.cliente)) {
+      next();
+    }
+  } else {
+    next({ name: 'Login' });
+  }
 });
 
 export default router;
