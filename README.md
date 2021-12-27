@@ -1,5 +1,11 @@
 # proyecto-final-romerouro
 
+Ingreso al sistema
+
+Administrador: Email: a@a.com Password: admin
+
+Cliente: Email: c@c.com Password: cliente
+
 ## Project setup
 ```
 npm install
