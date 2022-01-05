@@ -1,4 +1,11 @@
-# proyecto-final-romerouro
+# proyecto3 romero uro
+
+Ingreso al sistema
+
+Administrador: Email: a@a.com Password: admin
+
+Cliente: Email: c@c.com Password: cliente
+
 
 ## Project setup
 ```
