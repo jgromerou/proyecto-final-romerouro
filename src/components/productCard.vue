@@ -8,7 +8,7 @@
         small
         text-color="white"
         color="black"
-        >COMIDA</v-chip
+        >CAMISAS</v-chip
       >
       <v-card-title style="padding-top: 5px"
         >{{ product.nombre }}
@@ -25,6 +25,7 @@
             size="20"
           ></v-rating>
           <ProductDetail class="ml-10" :product="product"></ProductDetail>
+          <v-spacer class="mb-8"></v-spacer>
         </v-row>
       </v-card-text>
     </v-card>

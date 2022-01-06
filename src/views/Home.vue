@@ -1,14 +1,14 @@
 <template>
   <v-container>
-    <Navbar v-if="loginStatus"></Navbar>
-    <NavbarLogout v-else></NavbarLogout>
+    <Navbar></Navbar>
+    <!-- <NavbarLogout v-else></NavbarLogout> -->
     <div class="banner row mt-8">
       <div class="col banner-text">
         <h1 class="font-light-black display-1">IR A NUESTRO PRODUCTOS</h1>
         <h1 class="font-weight-black display-4">TIENDA</h1>
         <a>
           <div @click.prevent="$vuetify.goTo(target, option)">
-            <h2 class="start-nav display 3">Empezar &rarr;</h2>
+            <v-icon large>fa-chevron-down</v-icon>
           </div>
         </a>
       </div>
@@ -19,30 +19,6 @@
       </div>
     </div>
     <div class="container">
-      <div class="container banner" v-if="!isLogin">
-        <div class="row giveaway-banner">
-          <div class="banner-text" style="padding-left: 0px; color: white">
-            <h1 class="font-weight-black display-1">REGISTRARSE ES FACIL!</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              malesuada urna non vulputate elementum. Aliquam neque arcu,
-              scelerisque sed turpis at, maximus ultrices tellus. Mauris quis ex
-              at purus imperdiet sagittis vel quis ligula. Maecenas congue
-              placerat ipsum, at finibus mi porta ut. Cras ultricies molestie
-              libero, in facilisis leo pharetra vitae. Morbi fermentum neque ac
-              maximus auctor. Phasellus ornare egestas sapien vel lacinia.
-              Integer blandit felis ac sem imperdiet, vitae pellentesque nunc
-              mollis.
-            </p>
-            <div class="my-2">
-              <v-btn depressed color="primary">Registrarse</v-btn>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="search-wrapper panel-heading">
-       
-      </div> -->
       <div class="search-wrapper heading mb-6" id="collection">
         <h1 class="container font-weight-black display-1">
           Nuestros Productos
@@ -64,6 +40,28 @@
           :product="product"
         ></Card>
       </div>
+
+      <div class="container banner" v-if="!isLogin">
+        <div class="row giveaway-banner">
+          <div class="banner-text" style="padding-left: 0px; color: white">
+            <h1 class="font-weight-black display-1">REGISTRARSE ES FACIL!</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+              malesuada urna non vulputate elementum. Aliquam neque arcu,
+              scelerisque sed turpis at, maximus ultrices tellus. Mauris quis ex
+              at purus imperdiet sagittis vel quis ligula. Maecenas congue
+              placerat ipsum, at finibus mi porta ut. Cras ultricies molestie
+              libero, in facilisis leo pharetra vitae. Morbi fermentum neque ac
+              maximus auctor. Phasellus ornare egestas sapien vel lacinia.
+              Integer blandit felis ac sem imperdiet, vitae pellentesque nunc
+              mollis.
+            </p>
+            <div class="my-2" @click.prevent="toRegister">
+              <v-btn depressed color="primary">Registrarse</v-btn>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <Footer></Footer>
@@ -72,7 +70,7 @@
 
 <script>
 import Navbar from '../components/Navbar';
-import NavbarLogout from '../components/NavbarLogout';
+//import NavbarLogout from '../components/NavbarLogout';
 import Card from '../components/productCard';
 import Footer from '../components/Footer';
 import { mapState } from 'vuex';
@@ -82,7 +80,7 @@ export default {
     Navbar,
     Card,
     Footer,
-    NavbarLogout,
+    //NavbarLogout,
   },
   data() {
     return {
@@ -91,6 +89,11 @@ export default {
       easing: 'easeInOutCubic',
       buscar: '',
     };
+  },
+  methods: {
+    toRegister() {
+      this.$store.dispatch('toRegister');
+    },
   },
   computed: {
     target() {
@@ -132,7 +135,6 @@ export default {
   mounted() {
     this.$store.dispatch('obtenerProductos');
     this.$store.dispatch('obtenerCarrito');
-    //this.$store.dispatch('loginCheck');
   },
 };
 </script>
@@ -229,5 +231,10 @@ img {
   margin: 0% !important;
   border-radius: 1rem;
   color: white !important;
+}
+#input-buscador::placeholder {
+  color: white !important;
+  font-size: 1.2em;
+  font-style: italic;
 }
 </style>

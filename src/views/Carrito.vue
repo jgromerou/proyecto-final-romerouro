@@ -68,7 +68,7 @@
               color="success"
               class="col-7 mx-auto"
               dark
-              >Checkout</v-btn
+              >Generar Pedido</v-btn
             >
           </div>
         </div>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import router from '../router';
 import axios from 'axios';
+import auth from './modules/auth';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -216,7 +217,7 @@ export default new Vuex.Store({
         if (usuario) {
           //context.commit('setToken', usuario);
           context.commit('SET_USUARIO', usuario);
-          console.log('usuariooooooooooo', usuario);
+          console.log('usuario', usuario);
         }
         router.push({ name: 'Home' }).catch(() => {});
       } else {
@@ -246,5 +247,8 @@ export default new Vuex.Store({
     isLogin: (state) => state.isLogin,
     productos: (state) => state.productos,
     usuario: (state) => state.usuario,
+  },
+  modules: {
+    auth,
   },
 });

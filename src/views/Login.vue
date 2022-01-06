@@ -102,7 +102,7 @@ export default {
           rol: 'Administrador',
         };
 
-        localStorage.setItem('Usuario', JSON.stringify(newAdmin));
+        localStorage.setItem('Usuario', JSON.stringify(newAdmin)); //agregar al dispatch
         this.$store.dispatch('guardarUsuario', newAdmin);
       } else if (this.email == 'c@c.com' && this.password == 'cliente') {
         this.$emit('authenticatedCliente', true);
@@ -113,7 +113,7 @@ export default {
           token: this.email + this.password,
           rol: 'Cliente',
         };
-        localStorage.setItem('Usuario', JSON.stringify(newCliente));
+        localStorage.setItem('Usuario', JSON.stringify(newCliente)); //agregar al dispatch
         this.$store.dispatch('guardarUsuario', newCliente);
       } else {
         this.alertaError = true;

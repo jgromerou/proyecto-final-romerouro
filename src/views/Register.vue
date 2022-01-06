@@ -34,10 +34,10 @@
           >Registrarse</v-btn
         >
         <v-spacer></v-spacer>
-        <small>
+        <div class="mt-8">
           Ya tienes una cuenta?
           <a href="" @click.prevent="toLogin">Login</a>
-        </small>
+        </div>
       </v-form>
     </div>
   </v-layout>
