@@ -5,10 +5,17 @@
       @drawer-opened="handleDrawerChange('left', $event)"
     >
     </NavigationDrawerLeft>
+
+    <NavigationDrawerRight
+      :open="openRightNavigationDrawer"
+      @drawer-opened="handleDrawerChange('right', $event)"
+    >
+    </NavigationDrawerRight>
     <v-app-bar
       flat
       dense
       :clipped-left="$vuetify.breakpoint.mdAndUp"
+      :clipped-right="$vuetify.breakpoint.mdAndUp"
       app
       color="#0D47A1"
       dark
@@ -43,26 +50,6 @@
         </div>
       </a> -->
 
-        <v-btn
-          small
-          style="position: relative"
-          @click.prevent="toCarrito"
-          class="cart-button mt-2"
-          icon
-          color="white"
-        >
-          <v-badge
-            small
-            v-if="numberOfItem > 0"
-            color="red"
-            :content="numberOfItem"
-            class="badge-carrito"
-          >
-            <v-icon small>fas fa-shopping-bag</v-icon>
-          </v-badge>
-          <v-icon v-else>fas fa-shopping-bag</v-icon>
-        </v-btn>
-
         <!--  <template>
           <v-btn @click="logout" class="mx-2" color="blue">
             <v-icon>mdi-logout</v-icon> Salir
@@ -93,6 +80,26 @@
             </v-list-item>
           </v-list>
         </v-menu>
+
+        <v-btn
+          small
+          style="position: relative"
+          @click.stop="openRightNavigationDrawer = !openRightNavigationDrawer"
+          class="cart-button mt-2"
+          icon
+          color="white"
+        >
+          <v-badge
+            small
+            v-if="numberOfItem > 0"
+            color="red"
+            :content="numberOfItem"
+            class="badge-carrito"
+          >
+            <v-icon small>fas fa-shopping-bag</v-icon>
+          </v-badge>
+          <v-icon small v-else>fas fa-shopping-bag</v-icon>
+        </v-btn>
       </v-container>
     </v-app-bar>
 
@@ -124,11 +131,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import NavigationDrawerLeft from './NavigationDrawerLeft.vue';
+import NavigationDrawerRight from './NavigationDrawerRight.vue';
 
 export default {
   name: 'Navbar',
   components: {
     NavigationDrawerLeft,
+    NavigationDrawerRight,
   },
   data() {
     return {
