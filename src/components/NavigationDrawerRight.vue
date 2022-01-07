@@ -9,6 +9,13 @@
     v-if="isLogin"
   >
     <v-container>
+      <div>
+        <p class="text-right">
+          <v-btn @click="drawerOpen = false" class="d-inline-block"
+            ><v-icon>fa-times</v-icon></v-btn
+          >
+        </p>
+      </div>
       <div class="container col">
         <div class="row">
           <!-- <table v-if="carts.length > 0" class="col-8 table mt-8 mr-8">
@@ -240,7 +247,7 @@ export default {
       return localStorage.Email;
     },
     numberOfItem() {
-      return this.$store.state.carts.length;
+      return this.$store.state.carrito.carts.length;
     },
     esAdministrador() {
       return (
@@ -257,7 +264,7 @@ export default {
     ...mapGetters(['isLogin']),
 
     carts() {
-      return this.$store.state.carts;
+      return this.$store.state.carrito.carts;
     },
     price() {
       let precioInicial = 0;

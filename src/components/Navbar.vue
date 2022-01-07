@@ -174,7 +174,7 @@ export default {
       return localStorage.Email;
     },
     numberOfItem() {
-      return this.$store.state.carts.length;
+      return this.$store.state.carrito.carts.length;
     },
     esAdministrador() {
       return (
