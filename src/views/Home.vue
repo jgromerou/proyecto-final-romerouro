@@ -114,7 +114,7 @@ export default {
       return this.$store.state.productos;
     }, */
     buscarProductos() {
-      return this.$store.state.productos.filter((p) => {
+      return this.$store.state.productos.productos.filter((p) => {
         return p.nombre.toLowerCase().indexOf(this.buscar.toLowerCase()) != -1;
       });
     },

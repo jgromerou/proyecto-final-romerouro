@@ -21,7 +21,7 @@
         <v-list-group>
           <v-list-item slot="activator">
             <v-list-item>
-              <v-list-item-title> PANEL DE ADMININS</v-list-item-title>
+              <v-list-item-title> PANEL DE ADMIN</v-list-item-title>
             </v-list-item>
           </v-list-item>
           <v-list-item :to="{ name: 'Productos' }">
@@ -34,23 +34,23 @@
           </v-list-item>
         </v-list-group>
       </template>
-      <template v-if="esAdministrador || esCliente">
+      <!-- <template v-if="esAdministrador || esCliente">
         <v-list-group>
           <v-list-item slot="activator">
             <v-list-item>
-              <v-list-item-title> VER CARRITO</v-list-item-title>
+              <v-list-item-title> Volver a Home</v-list-item-title>
             </v-list-item>
           </v-list-item>
-          <v-list-item :to="{ name: 'Carrito' }">
+          <v-list-item :to="{ name: 'Home' }">
             <v-list-item-action>
               <v-icon>table_chart</v-icon>
             </v-list-item-action>
             <v-list-item>
-              <v-list-item-title> Carrito </v-list-item-title>
+              <v-list-item-title> Home </v-list-item-title>
             </v-list-item>
           </v-list-item>
         </v-list-group>
-      </template>
+      </template> -->
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -92,14 +92,14 @@ export default {
     },
     esAdministrador() {
       return (
-        this.$store.getters.usuario &&
-        this.$store.getters.usuario.rol === 'Administrador'
+        this.$store.state.auth.usuario &&
+        this.$store.state.auth.usuario.rol === 'Administrador'
       );
     },
     esCliente() {
       return (
-        this.$store.getters.usuario &&
-        this.$store.getters.usuario.rol === 'Cliente'
+        this.$store.state.auth.usuario &&
+        this.$store.state.auth.usuario.rol === 'Cliente'
       );
     },
     ...mapGetters(['isLogin']),

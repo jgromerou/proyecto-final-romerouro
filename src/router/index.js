@@ -79,13 +79,16 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     next();
   } else if (
-    store.state.usuario &&
-    store.state.usuario.rol == 'Administrador'
+    store.state.auth.usuario &&
+    store.state.auth.usuario.rol == 'Administrador'
   ) {
     if (to.matched.some((record) => record.meta.administrador)) {
       next();
     }
-  } else if (store.state.usuario && store.state.usuario.rol == 'Cliente') {
+  } else if (
+    store.state.auth.usuario &&
+    store.state.auth.usuario.rol == 'Cliente'
+  ) {
     if (to.matched.some((record) => record.meta.cliente)) {
       next();
     }
