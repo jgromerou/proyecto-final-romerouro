@@ -117,4 +117,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.checkout-img {
+  width: 30px;
+  height: 30px;
+}
+</style>

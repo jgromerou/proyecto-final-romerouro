@@ -3,6 +3,7 @@
     fixed
     :clipped="$vuetify.breakpoint.mdAndUp"
     app
+    left
     v-model="drawerOpen"
     @input="onInput"
     v-if="isLogin"

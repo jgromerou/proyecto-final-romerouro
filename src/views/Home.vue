@@ -14,6 +14,7 @@
       </div>
       <div class="col banner-img">
         <img
+          class="center"
           src="https://images.pexels.com/photos/3687999/pexels-photo-3687999.jpeg?cs=srgb&dl=pexels-mehrad-vosoughi-3687999.jpg&fm=jpg"
         />
       </div>
@@ -160,7 +161,11 @@ export default {
   }
 }
 img {
-  height: 30rem;
+  height: 15rem;
+}
+img.center {
+  display: block;
+  margin: 0 auto;
 }
 .card-hover {
   transition: all 0.2s ease-in-out;
