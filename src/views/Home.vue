@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <Navbar></Navbar>
-    <!-- <NavbarLogout v-else></NavbarLogout> -->
     <div class="banner row mt-8">
       <div class="col banner-text">
         <h1 class="font-light-black display-1">IR A NUESTRO PRODUCTOS</h1>
@@ -42,7 +41,7 @@
         ></Card>
       </div>
 
-      <div class="container banner" v-if="!isLogin">
+      <div class="container banner mt-4" v-if="!isLogin">
         <div class="row giveaway-banner">
           <div class="banner-text" style="padding-left: 0px; color: white">
             <h1 class="font-weight-black display-1">REGISTRARSE ES FACIL!</h1>
@@ -71,7 +70,6 @@
 
 <script>
 import Navbar from '../components/Navbar';
-//import NavbarLogout from '../components/NavbarLogout';
 import Card from '../components/productCard';
 import Footer from '../components/Footer';
 import { mapState } from 'vuex';
@@ -81,7 +79,6 @@ export default {
     Navbar,
     Card,
     Footer,
-    //NavbarLogout,
   },
   data() {
     return {
@@ -203,7 +200,7 @@ img.center {
   );
   margin: 0%;
   border-radius: 1rem;
-  height: 20rem;
+  height: 28rem;
   -webkit-box-shadow: 0px 5px 34px -3px rgba(112, 112, 112, 0.7) !important;
   -moz-box-shadow: 0px 5px 34px -3px rgba(112, 112, 112, 0.7) !important;
   box-shadow: 0px 5px 34px -3px rgba(112, 112, 112, 0.7) !important;
@@ -241,5 +238,8 @@ img.center {
   color: white !important;
   font-size: 1.2em;
   font-style: italic;
+}
+h1 {
+  color: white !important;
 }
 </style>

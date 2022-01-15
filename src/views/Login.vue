@@ -23,9 +23,9 @@
         >
         </v-text-field>
 
-        <v-btn class="btn lg primary block" @click="login()">Login</v-btn>
+        <v-btn class="btn lg primary block mt-4" @click="login()">Login</v-btn>
         <v-spacer></v-spacer>
-        <div class="mt-8">
+        <div class="mt-6">
           No tienes una cuenta?
           <a href="" @click.prevent="toRegister">Registrarse</a>
         </div>
@@ -141,9 +141,9 @@ export default {
 .form-signin {
   max-width: 1000px;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: #000;
   padding: 15px 40px 50px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #000;
   border-radius: 10px;
 }
 .form-signin input[type='text'],
@@ -152,5 +152,18 @@ export default {
 }
 .form-signin .form-control {
   padding: 10px;
+}
+a {
+  color: #fff !important;
+}
+div {
+  color: #fff !important;
+}
+h2 {
+  color: #fff !important;
+}
+.custom-placeholer-color input::placeholder {
+  color: red !important;
+  opacity: 1;
 }
 </style>
