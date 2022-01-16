@@ -6,10 +6,10 @@
     <v-dialog v-model="dialog" max-width="450">
       <v-card class="mx-auto my-0">
         <!--  <v-img height="400" :src="product.image_url"></v-img> -->
-        <v-img height="400" :src="product.image"></v-img>
+        <v-img height="400" :src="product.imagen"></v-img>
         <v-card-text style="padding-bottom: 0px">
           <v-chip
-            class="ma-2 ml-4 my-0"
+            class="ma-2 ml-4 my-2"
             label
             small
             text-color="white"

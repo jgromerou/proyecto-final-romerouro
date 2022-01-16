@@ -76,7 +76,7 @@ export default {
     register(context, payload) {
       console.log(payload, `registro de usuario actions`);
       axios({
-        url: 'https://61b0b20e3c954f001722a59e.mockapi.io/usuarios',
+        url: 'https://61e45b6b1a976f00176ee447.mockapi.io/usuarios',
         method: 'post',
         data: payload,
       }).then((data) => {

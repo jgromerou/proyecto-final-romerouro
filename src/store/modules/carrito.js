@@ -18,7 +18,7 @@ export default {
   actions: {
     obtenerCarrito(context) {
       axios({
-        url: `https://61b0b20e3c954f001722a59e.mockapi.io/carrito`,
+        url: `https://61e45b6b1a976f00176ee447.mockapi.io/carrito`,
         method: 'get',
         /* headers: {
                 token: localStorage.token,
@@ -35,7 +35,7 @@ export default {
 
     agregarProductoCarrito(context, payload) {
       axios({
-        url: `https://61b0b20e3c954f001722a59e.mockapi.io/carrito`,
+        url: `https://61e45b6b1a976f00176ee447.mockapi.io/carrito`,
         method: 'POST',
         /* headers: {
                 token: localStorage.token,
@@ -56,7 +56,7 @@ export default {
 
     agregarCantidad(context, payload) {
       axios({
-        url: `https://61b0b20e3c954f001722a59e.mockapi.io/carrito/${payload.nId}`,
+        url: `https://61e45b6b1a976f00176ee447.mockapi.io/carrito/${payload.nId}`,
         method: 'put',
         /* headers: {
                 token: localStorage.token,
@@ -71,7 +71,7 @@ export default {
     },
     restarCantidad(context, payload) {
       axios({
-        url: `https://61b0b20e3c954f001722a59e.mockapi.io/carrito/${payload.nId}`,
+        url: `https://61e45b6b1a976f00176ee447.mockapi.io/carrito/${payload.nId}`,
         method: 'put',
         /* headers: {
                 token: localStorage.token,
@@ -87,7 +87,7 @@ export default {
 
     eliminarItemCarrito(context, payload) {
       axios({
-        url: `https://61b0b20e3c954f001722a59e.mockapi.io/carrito/${payload}`,
+        url: `https://61e45b6b1a976f00176ee447.mockapi.io/carrito/${payload}`,
         method: 'delete',
         /* headers: {
                 token: localStorage.token,

@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td scope="row">
-      <img class="checkout-img" :src="cart.image" />
+      <img class="checkout-img" src="/assets/images/logo.jpeg" />
     </td>
     <td class="align-middle">{{ cart.nombre }}</td>
 
