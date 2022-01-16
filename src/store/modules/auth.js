@@ -4,6 +4,24 @@ export default {
   state: {
     isLogin: false,
     usuario: [],
+    disabled: false,
+    rules: {
+      required: [(v) => !!v || 'Este campo obligatorio.'],
+      email: [
+        (v) => !!v || 'Este campo obligatorio.',
+        (v) => /.+@.+\..+/.test(v) || 'Ingrese un e-mail válido.',
+      ],
+      password: [
+        (v) => !!v || 'Este campo obligatorio.',
+        (v) =>
+          (v && v.length >= 6) ||
+          'La contraseña debe tener mínimo 6 caracteres',
+        (v) =>
+          /(?=.*[a-z])|(?=.*[A-Z])/.test(v) ||
+          'Agregue carácter/es a su contraseña',
+        (v) => /(?=.*\d)/.test(v) || 'Ingrese número/s a su contraseña',
+      ],
+    },
   },
   mutations: {
     LOGIN(state) {
@@ -92,5 +110,7 @@ export default {
   getters: {
     isLogin: (state) => state.isLogin,
     usuario: (state) => state.usuario,
+    rules: (state) => state.rules,
+    disabled: (state) => state.disabled,
   },
 };
