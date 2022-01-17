@@ -2,13 +2,18 @@
   <v-app>
     <v-main>
       <router-view class="" />
+      <Alerts />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import Alerts from './components/Alerts.vue';
 export default {
   name: 'App',
+  components: {
+    Alerts,
+  },
   mounted() {
     this.$store.dispatch('loginCheck');
   },

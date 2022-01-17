@@ -93,7 +93,7 @@ export default {
       }
 
       if (this.email == 'a@a.com' && this.password == 'admin') {
-        this.$emit('authenticated', true);
+        //this.$emit('authenticated', true);
 
         const newAdmin = {
           email: this.email,
@@ -103,7 +103,7 @@ export default {
         };
         this.$store.dispatch('guardarUsuario', newAdmin);
       } else if (this.email == 'c@c.com' && this.password == 'cliente') {
-        this.$emit('authenticatedCliente', true);
+        //this.$emit('authenticatedCliente', true);
         // this.$router.replace({ name: 'Home' });
         const newCliente = {
           email: this.email,
@@ -113,8 +113,9 @@ export default {
         };
         this.$store.dispatch('guardarUsuario', newCliente);
       } else {
-        this.alertaError = true;
-        this.mostrarAlerta('El email y contraseña  son incorrectos');
+        //this.alertaError = true;
+        //this.mostrarAlerta('El email y contraseña  son incorrectos');
+        this.$store.dispatch('errorLogin');
       }
     },
     mostrarAlerta(texto) {

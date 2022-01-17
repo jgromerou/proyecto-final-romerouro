@@ -22,6 +22,7 @@ export default {
         (v) => /(?=.*\d)/.test(v) || 'Ingrese número/s a su contraseña',
       ],
     },
+    alert_warning: false,
   },
   mutations: {
     LOGIN(state) {
@@ -51,6 +52,12 @@ export default {
       //localStorage.clear();
       state.isLogin = false;
       router.push({ name: 'Home' }).catch(() => {});
+    },
+    SHOW_ALERT_WARNING(state) {
+      state.alert_warning = true;
+      setTimeout(() => {
+        state.alert_warning = false;
+      }, 3000);
     },
   },
   actions: {
@@ -106,11 +113,15 @@ export default {
       commit('SET_USUARIO', null);
       commit('LOGOUT');
     },
+    errorLogin(context) {
+      context.commit('SHOW_ALERT_WARNING');
+    },
   },
   getters: {
     isLogin: (state) => state.isLogin,
     usuario: (state) => state.usuario,
     rules: (state) => state.rules,
     disabled: (state) => state.disabled,
+    alert_warning: (state) => state.alert_warning,
   },
 };
