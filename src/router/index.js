@@ -56,6 +56,26 @@ const routes = [
     name: 'Carrito',
     component: () => import('../views/Carrito.vue'),
   },
+  {
+    path: '/usuario',
+    name: 'Usuario',
+    component: () => import('../views/Usuario/Usuario.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+    children: [
+      {
+        path: '/editar',
+        name: 'UsuarioEditar',
+        component: () => import('../views/Usuario/UsuarioEditar.vue'),
+      },
+      {
+        path: '/pedidos',
+        name: 'Pedidos',
+        component: () => import('../views/Usuario/UsuarioPedidos.vue'),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

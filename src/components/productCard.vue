@@ -1,7 +1,7 @@
 <template>
   <div class="col col-sm-6 col-md-4 col-lg-3">
     <v-card class="mx-auto my-0 card-card" width="300">
-      <v-img height="250" :src="product.image"></v-img>
+      <v-img height="250" :src="product.imagen"></v-img>
       <v-chip
         class="ma-2 ml-4 my-0"
         label

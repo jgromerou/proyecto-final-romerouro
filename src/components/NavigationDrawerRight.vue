@@ -28,7 +28,7 @@
               ></TableRow>
             </tbody>
           </table> -->
-          <v-simple-table height="280px" v-if="carts.length > 0">
+          <v-simple-table height="280px" v-if="items.length > 0">
             <template v-slot:default>
               <thead>
                 <tr>
@@ -40,11 +40,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in carts" :key="item.id">
-                  <td><img class="checkout-img" :src="item.image" /></td>
+                <tr v-for="item in items" :key="item.id">
+                  <td><img class="checkout-img" :src="item.imagen" /></td>
                   <td>{{ item.nombre }}</td>
 
-                  <td>
+                  <!--  <td>
                     <v-btn
                       v-if="item.cantidad > 1 && !reload"
                       @click.prevent="restarCantidad(item.id, item.cantidad)"
@@ -65,7 +65,7 @@
                       <v-icon>fas fa-minus</v-icon>
                     </v-btn>
 
-                    {{ item.cantidad }}
+                    {{ cantidadcarrito }}
 
                     <v-btn
                       v-if="!reload"
@@ -86,8 +86,19 @@
                     >
                       <v-icon>fas fa-plus</v-icon>
                     </v-btn>
+                  </td> -->
+                  <td>
+                    <select
+                      v-model="selected"
+                      @change="cambiarCantidad(item, selected)"
+                    >
+                      <option v-for="selected in item.cantidad" :key="selected">
+                        {{ selected }}
+                      </option>
+                    </select>
+                    <!-- <p>{{ selected }}</p> -->
                   </td>
-                  <td>{{ item.precio * item.cantidad }}</td>
+                  <td>{{ item.precio * item.cantidadcarrito }}</td>
                   <td class="align-middle">
                     <v-btn
                       small
@@ -122,7 +133,7 @@
                 <v-card-subtitle
                   class="col mr-5 font-weight-light"
                   style="padding: 5px"
-                  >{{ carts.length }} item(s)</v-card-subtitle
+                  >{{ items.length }} item(s)</v-card-subtitle
                 >
               </v-row>
               <v-row align="center" class="mx-0 mb-2 justify-lg-space-between">
@@ -192,6 +203,7 @@ export default {
     return {
       drawerOpen: this.open,
       reload: false,
+      selected: 1,
     };
   },
   watch: {
@@ -241,13 +253,44 @@ export default {
     removeProduct(id) {
       this.$store.dispatch('eliminarItemCarrito', id);
     },
+    cambiarCantidad(item, cantidad) {
+      const oldItems = JSON.parse(localStorage.getItem('carrito')) || [];
+      const idToUse = item.id;
+      const existingItem = oldItems.find(({ id }) => id === idToUse);
+      console.log('aaaa');
+      if (existingItem) {
+        Object.assign(existingItem, {
+          nombre: item.nombre,
+          cantidadcarrito: parseInt(cantidad),
+          cantidad: item.cantidad,
+          precio: item.precio,
+          imagen: item.imagen,
+        });
+        console.log(existingItem);
+        console.log(item.nombre, cantidad);
+      } else {
+        const newItem = {
+          id: idToUse,
+          nombre: item.nombre,
+          cantidadcarrito: parseInt(cantidad),
+          cantidad: item.cantidad,
+          precio: item.precio,
+          imagen: item.imagen,
+        };
+        console.log(newItem);
+        oldItems.push(newItem);
+      }
+
+      localStorage.setItem('carrito', JSON.stringify(oldItems));
+      this.$store.dispatch('carritoLocalStorage');
+    },
   },
   computed: {
     email() {
       return localStorage.Email;
     },
     numberOfItem() {
-      return this.$store.state.carrito.carts.length;
+      return this.$store.state.carrito.items.length;
     },
     esAdministrador() {
       return (
@@ -261,27 +304,27 @@ export default {
         this.$store.getters.usuario.rol === 'Cliente'
       );
     },
-    ...mapGetters(['isLogin']),
+    ...mapGetters(['isLogin', 'items']),
 
-    carts() {
-      return this.$store.state.carrito.carts;
+    items() {
+      return this.$store.state.carrito.items;
     },
     price() {
       let precioInicial = 0;
       let precioTotal = 0;
       //   let carts = this.$store.state.carts
-      console.log(this.carts, `carrito inicial`);
-      for (let i = 0; i < this.carts.length; i++) {
-        precioInicial += this.carts[i].precio * this.carts[i].cantidad;
+      console.log(this.items, `carrito inicial`);
+      for (let i = 0; i < this.items.length; i++) {
+        precioInicial += this.items[i].precio * this.items[i].cantidadcarrito;
       }
       precioTotal = parseFloat(precioInicial).toLocaleString('id');
 
       return precioTotal;
     },
   },
-  mounted() {
+  /*  mounted() {
     this.$store.dispatch('obtenerCarrito');
-  },
+  }, */
 };
 </script>
 
@@ -310,5 +353,29 @@ th {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.selector {
+  border-radius: 15px;
+  background-color: red;
+}
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  color: white !important;
+}
+select {
+  width: 100%;
+  min-width: 7ch;
+  max-width: 15ch;
+  text-align: center;
+  text-align-last: center;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 </style>

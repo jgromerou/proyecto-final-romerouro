@@ -4,6 +4,25 @@ export default {
   state: {
     isLogin: false,
     usuario: [],
+    disabled: false,
+    rules: {
+      required: [(v) => !!v || 'Este campo obligatorio.'],
+      email: [
+        (v) => !!v || 'Este campo obligatorio.',
+        (v) => /.+@.+\..+/.test(v) || 'Ingrese un e-mail válido.',
+      ],
+      password: [
+        (v) => !!v || 'Este campo obligatorio.',
+        (v) =>
+          (v && v.length >= 6) ||
+          'La contraseña debe tener mínimo 6 caracteres',
+        (v) =>
+          /(?=.*[a-z])|(?=.*[A-Z])/.test(v) ||
+          'Agregue carácter/es a su contraseña',
+        (v) => /(?=.*\d)/.test(v) || 'Ingrese número/s a su contraseña',
+      ],
+    },
+    alert_warning: false,
   },
   mutations: {
     LOGIN(state) {
@@ -34,6 +53,12 @@ export default {
       state.isLogin = false;
       router.push({ name: 'Home' }).catch(() => {});
     },
+    SHOW_ALERT_WARNING(state) {
+      state.alert_warning = true;
+      setTimeout(() => {
+        state.alert_warning = false;
+      }, 3000);
+    },
   },
   actions: {
     guardarUsuario({ commit }, payload) {
@@ -58,7 +83,7 @@ export default {
     register(context, payload) {
       console.log(payload, `registro de usuario actions`);
       axios({
-        url: 'https://61b0b20e3c954f001722a59e.mockapi.io/usuarios',
+        url: 'https://61e45b6b1a976f00176ee447.mockapi.io/usuarios',
         method: 'post',
         data: payload,
       }).then((data) => {
@@ -88,9 +113,15 @@ export default {
       commit('SET_USUARIO', null);
       commit('LOGOUT');
     },
+    errorLogin(context) {
+      context.commit('SHOW_ALERT_WARNING');
+    },
   },
   getters: {
     isLogin: (state) => state.isLogin,
     usuario: (state) => state.usuario,
+    rules: (state) => state.rules,
+    disabled: (state) => state.disabled,
+    alert_warning: (state) => state.alert_warning,
   },
 };

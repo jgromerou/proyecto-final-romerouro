@@ -123,9 +123,9 @@ export default {
 .form-signin {
   max-width: 380px;
   margin: 0 auto;
-  background-color: #fff;
+
   padding: 15px 40px 50px;
-  border: 1px solid #e5e5e5;
+
   border-radius: 10px;
 }
 .form-signin input[type='text'],

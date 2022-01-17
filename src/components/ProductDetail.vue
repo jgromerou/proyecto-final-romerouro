@@ -6,10 +6,10 @@
     <v-dialog v-model="dialog" max-width="450">
       <v-card class="mx-auto my-0">
         <!--  <v-img height="400" :src="product.image_url"></v-img> -->
-        <v-img height="400" :src="product.image"></v-img>
+        <v-img height="400" :src="product.imagen"></v-img>
         <v-card-text style="padding-bottom: 0px">
           <v-chip
-            class="ma-2 ml-4 my-0"
+            class="ma-2 ml-4 my-2"
             label
             small
             text-color="white"
@@ -111,13 +111,17 @@ export default {
   data() {
     return {
       dialog: false,
+      //cantidadcarrito: 1,
     };
   },
   props: ['product'],
   methods: {
     agregarProductoCarrito() {
       console.log(this.product, `producto a agregar`);
-      this.$store.dispatch('agregarProductoCarrito', this.product);
+      const newProduct = { ...this.product, cantidadcarrito: 1 };
+      console.log('nuevo producto', newProduct);
+      //this.$store.dispatch('agregarProductoCarrito', this.product);
+      this.$store.dispatch('agregarCarrito', newProduct);
     },
     /* addToCart() {
       this.$store.commit('AGREGAR_CARRITO_LOCALSTORAGE', this.product);

@@ -14,7 +14,7 @@ export default {
   actions: {
     obtenerProductos(context) {
       axios({
-        url: 'https://61b0b20e3c954f001722a59e.mockapi.io/productos',
+        url: 'https://61e45b6b1a976f00176ee447.mockapi.io/productos',
         method: 'get',
       })
         .then(({ data }) => {

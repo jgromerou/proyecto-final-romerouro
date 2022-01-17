@@ -50,6 +50,12 @@
                           label="Nombre"
                         ></v-text-field>
                       </v-col>
+                      <v-col cols="12" sm="12" md="12">
+                        <v-text-field
+                          v-model="imagen"
+                          label="Imagen"
+                        ></v-text-field>
+                      </v-col>
 
                       <v-col cols="12" sm="6" md="6">
                         <v-text-field
@@ -114,9 +120,12 @@
           <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
           </v-icon>
-          <template>
-            <v-icon small @click="eliminarItem(item)"> mdi-delete </v-icon>
-          </template>
+
+          <v-icon small @click="eliminarItem(item)"> mdi-delete </v-icon>
+        </template>
+
+        <template v-slot:[`item.imagen`]="{ item }">
+          <v-img width="50" :src="item.imagen"></v-img>
         </template>
 
         <template v-slot:no-data>
@@ -139,11 +148,12 @@ export default {
   data: () => ({
     dialog: false,
     search: '',
-
+    imagen: '',
     dialogDelete: false,
     headers: [
       { text: 'Actions', value: 'actions', sortable: false },
       { text: 'Código', value: 'id', sortable: false },
+      { text: 'Imagen', value: 'imagen', sortable: false },
       { text: 'Nombre', value: 'nombre', sortable: true },
       { text: 'Precio', value: 'precio', sortable: false },
       { text: 'Cantidad', value: 'cantidad', sortable: false },
@@ -256,7 +266,7 @@ export default {
         //Código para editar
         axios
           .put(
-            `https://61b0b20e3c954f001722a59e.mockapi.io/productos/${this.id}`,
+            `https://61e45b6b1a976f00176ee447.mockapi.io/productos/${this.id}`,
             {
               nombre: this.nombre,
               precio: parseInt(this.precio),
@@ -276,7 +286,7 @@ export default {
         //Código para guardar
         axios
           .post(
-            'https://61b0b20e3c954f001722a59e.mockapi.io/productos/',
+            'https://61e45b6b1a976f00176ee447.mockapi.io/productos/',
             {
               nombre: this.nombre,
               cantidad: parseInt(this.cantidad),
@@ -299,7 +309,7 @@ export default {
       let me = this;
       axios
         .delete(
-          `https://61b0b20e3c954f001722a59e.mockapi.io/productos/${this.id}`
+          `https://61e45b6b1a976f00176ee447.mockapi.io/productos/${this.id}`
 
           /* configuracion */
         )
