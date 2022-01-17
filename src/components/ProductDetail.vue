@@ -111,13 +111,17 @@ export default {
   data() {
     return {
       dialog: false,
+      //cantidadcarrito: 1,
     };
   },
   props: ['product'],
   methods: {
     agregarProductoCarrito() {
       console.log(this.product, `producto a agregar`);
-      this.$store.dispatch('agregarProductoCarrito', this.product);
+      const newProduct = { ...this.product, cantidadcarrito: 1 };
+      console.log('nuevo producto', newProduct);
+      //this.$store.dispatch('agregarProductoCarrito', this.product);
+      this.$store.dispatch('agregarCarrito', newProduct);
     },
     /* addToCart() {
       this.$store.commit('AGREGAR_CARRITO_LOCALSTORAGE', this.product);

@@ -119,7 +119,7 @@ export default {
       return localStorage.Email;
     },
     numberOfItem() {
-      return this.$store.state.carrito.carts.length;
+      return this.$store.state.carrito.items.length;
     },
     esAdministrador() {
       return (

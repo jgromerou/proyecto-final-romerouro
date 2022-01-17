@@ -1,10 +1,11 @@
 <template>
   <div>
-    <!--      <transition name="fade" mode="out-in">
-      <v-alert type="success" class="custom-alert" v-show="cartAdd" key="1">
+    <transition name="fade" mode="out-in">
+      <v-alert type="success" class="custom-alert" v-show="alert" key="1">
         Item agregado al carrito!
       </v-alert>
-    </transition> 
+    </transition>
+    <!--
     <transition name="fade" mode="out-in">
       <v-alert type="success" class="custom-alert" v-show="userUpdate" key="1">
         Usuario actualizado satisfactoramente!
@@ -41,8 +42,9 @@ export default {
   computed: {
     ...mapState({
       alert_warning: (state) => state.alert_warning,
+      alert: (state) => state.alert,
     }),
-    ...mapGetters(['alert_warning']),
+    ...mapGetters(['alert_warning', 'alert']),
   },
 };
 </script>

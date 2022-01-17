@@ -2,7 +2,10 @@ import router from '../../router';
 import axios from 'axios';
 export default {
   state: {
+    alert: false,
+    alert_error: false,
     carts: [],
+    items: [],
   },
   mutations: {
     OBTENER_CARRITO(state, payload) {
@@ -14,6 +17,28 @@ export default {
     /*  updateCart(state, payload) {
             state.carts.push(payload);
           }, */
+    UPDATE_CARRITO(state, carrito) {
+      state.items = carrito;
+    },
+
+    INSERT_CARRITO(state, producto) {
+      state.items.push(producto);
+      localStorage.setItem('carrito', JSON.stringify(state.items));
+    },
+
+    SHOW_ALERT(state) {
+      state.alert = true;
+      setTimeout(() => {
+        state.alert = false;
+      }, 3000);
+    },
+
+    SHOW_ALERT_ERROR(state) {
+      state.alert_error = true;
+      setTimeout(() => {
+        state.alert = false;
+      }, 3000);
+    },
   },
   actions: {
     obtenerCarrito(context) {
@@ -98,6 +123,19 @@ export default {
       });
     },
 
+    carritoLocalStorage(context) {
+      if (localStorage.getItem('carrito')) {
+        context.commit(
+          'UPDATE_CARRITO',
+          JSON.parse(localStorage.getItem('carrito'))
+        );
+      }
+    },
+    agregarCarrito(context, producto) {
+      context.commit('INSERT_CARRITO', producto);
+      context.commit('SHOW_ALERT');
+    },
+
     /*  checkout(context, payload) {
             console.log(payload, `here`);
             axios({
@@ -112,5 +150,9 @@ export default {
               context.dispatch('fetchCart');
             });
           }, */
+  },
+  getters: {
+    alert: (state) => state.alert,
+    items: (state) => state.items,
   },
 };
