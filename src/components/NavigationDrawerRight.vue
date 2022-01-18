@@ -28,7 +28,7 @@
               ></TableRow>
             </tbody>
           </table> -->
-          <v-simple-table height="280px" v-if="items.length > 0">
+          <v-simple-table height="300px" v-if="items.length > 0">
             <template v-slot:default>
               <thead>
                 <tr>
@@ -40,7 +40,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in items" :key="item.id">
+                <tr v-for="(item, index) in items" :key="index + 1">
                   <td><img class="checkout-img" :src="item.imagen" /></td>
                   <td>{{ item.nombre }}</td>
 
@@ -89,8 +89,8 @@
                   </td> -->
                   <td>
                     <select
-                      v-model="selected"
-                      @change="cambiarCantidad(item, selected)"
+                      v-model="item.cantidadcarrito"
+                      @change="cambiarCantidad(item, item.cantidadcarrito)"
                     >
                       <option v-for="selected in item.cantidad" :key="selected">
                         {{ selected }}
@@ -102,7 +102,7 @@
                   <td class="align-middle">
                     <v-btn
                       small
-                      @click.prevent="removeProduct(item.id)"
+                      @click.prevent="removerCarrito(index)"
                       class="delete-button"
                       icon
                       color="grey"
@@ -119,7 +119,7 @@
           </h1>
         </div>
         <div class="col">
-          <v-card class="mx-auto" max-width="344">
+          <v-card class="mx-auto mt-2 pt-2" max-width="344">
             <v-card-text>
               <p class="display-1 font-weight-black text--primary">
                 Resumen del Pedido
@@ -164,14 +164,27 @@
             </v-card-text>
           </v-card>
           <div class="my-4 row">
-            <v-btn
-              @click="checkout"
-              x-large
-              color="success"
-              class="col-7 mx-auto"
-              dark
-              >Generar Pedido</v-btn
-            >
+            <v-col class="col-6 p-2">
+              <v-btn
+                color="success"
+                x-large
+                width="100%"
+                class="col-8 mx-auto"
+                @click="checkout"
+              >
+                Finalizar
+              </v-btn>
+            </v-col>
+            <v-col class="col-6 p-2">
+              <v-btn
+                color="error"
+                x-large
+                width="100%"
+                class="col-8 mx-auto"
+                @click="vaciarCarrito"
+                >Vaciar</v-btn
+              >
+            </v-col>
           </div>
         </div>
       </div>
@@ -181,7 +194,7 @@
 
 <script>
 //import TableRow from '../components/CartTableRow';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'NavigationDrawerLeft',
   components: {
@@ -213,6 +226,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['vaciarCarrito']),
     onInput(isOpen) {
       this.$emit('drawer-opened', isOpen);
       console.log('onInput: ' + isOpen);
@@ -283,6 +297,10 @@ export default {
 
       localStorage.setItem('carrito', JSON.stringify(oldItems));
       this.$store.dispatch('carritoLocalStorage');
+    },
+    removerCarrito(index) {
+      this.$store.dispatch('removerCarrito', index);
+      console.log(index);
     },
   },
   computed: {
