@@ -55,6 +55,7 @@
                           v-model="imagen"
                           label="Imagen"
                         ></v-text-field>
+                        <p>Agregar imágenes: aves.jpg, logo.jpeg</p>
                       </v-col>
 
                       <v-col cols="12" sm="6" md="6">
@@ -158,6 +159,7 @@ export default {
       { text: 'Precio', value: 'precio', sortable: false },
       { text: 'Cantidad', value: 'cantidad', sortable: false },
     ],
+    newImagen: '/assets/images/',
     id: '',
     nombre: '',
     stock: 0,
@@ -199,6 +201,23 @@ export default {
   },
 
   methods: {
+    uploadImage(event) {
+      const URL = '/assets/images/';
+
+      let data = new FormData();
+      data.append('name', 'my-picture');
+      data.append('file', event.target.files[0]);
+
+      let config = {
+        header: {
+          'Content-Type': 'image/png',
+        },
+      };
+
+      axios.put(URL, data, config).then((response) => {
+        console.log('image upload response > ', response);
+      });
+    },
     editItem(item) {
       this.id = item.id;
       this.nombre = item.nombre;
@@ -291,6 +310,7 @@ export default {
               nombre: this.nombre,
               cantidad: parseInt(this.cantidad),
               precio: parseInt(this.precio),
+              imagen: this.newImagen + this.imagen,
             }
             //configuracion
           )

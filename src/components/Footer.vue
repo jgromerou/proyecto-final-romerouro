@@ -1,5 +1,5 @@
 <template>
-  <v-card height="50">
+  <v-card height="30">
     <v-footer absolute class="font-weight-medium" color="black">
       <v-col class="text-center" cols="12" style="color: white">
         {{ new Date().getFullYear() }} —
@@ -15,4 +15,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.footer {
+  background-color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  color: white;
+}
+</style>

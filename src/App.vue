@@ -3,16 +3,19 @@
     <v-main>
       <router-view class="" />
       <Alerts />
+      <Footer />
     </v-main>
   </v-app>
 </template>
 
 <script>
 import Alerts from './components/Alerts.vue';
+import Footer from './components/Footer.vue';
 export default {
   name: 'App',
   components: {
     Alerts,
+    Footer,
   },
   mounted() {
     this.$store.dispatch('loginCheck');

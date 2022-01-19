@@ -63,22 +63,19 @@
         </div>
       </div>
     </div>
-
-    <Footer></Footer>
   </v-container>
 </template>
 
 <script>
 import Navbar from '../components/Navbar';
 import Card from '../components/productCard';
-import Footer from '../components/Footer';
+
 import { mapState } from 'vuex';
 export default {
   name: 'Home',
   components: {
     Navbar,
     Card,
-    Footer,
   },
   data() {
     return {

@@ -86,7 +86,7 @@
           <v-spacer></v-spacer>
           <div class="text-center">
             <v-btn
-              @click.prevent="agregarProductoCarrito"
+              @click.prevent="agregarProductoCarrito(product)"
               rounded
               color="#0E004B"
               class="orange--text"
@@ -116,16 +116,38 @@ export default {
   },
   props: ['product'],
   methods: {
-    agregarProductoCarrito() {
+    /*  agregarProductoCarrito() {
       console.log(this.product, `producto a agregar`);
       const newProduct = { ...this.product, cantidadcarrito: 1 };
       console.log('nuevo producto', newProduct);
       //this.$store.dispatch('agregarProductoCarrito', this.product);
       this.$store.dispatch('agregarCarrito', newProduct);
-    },
+    }, */
     /* addToCart() {
       this.$store.commit('AGREGAR_CARRITO_LOCALSTORAGE', this.product);
     }, */
+    agregarProductoCarrito(item) {
+      const oldItems = JSON.parse(localStorage.getItem('carrito')) || [];
+      const idToUse = item.id;
+      const existingItem = oldItems.find(({ id }) => id === idToUse);
+      console.log('aaaa');
+      if (existingItem) {
+        this.$store.dispatch('errorItemRepeated');
+        this.dialog = false;
+      } else {
+        console.log(this.product, `producto a agregar`);
+        const newProduct = { ...this.product, cantidadcarrito: 1 };
+        console.log('nuevo producto', newProduct);
+        //this.$store.dispatch('agregarProductoCarrito', this.product);
+        this.$store.dispatch('agregarCarrito', newProduct);
+        /*   console.log(newItem);
+        oldItems.push(newItem); */
+        this.dialog = false;
+      }
+
+      /* localStorage.setItem('carrito', JSON.stringify(oldItems));
+      this.$store.dispatch('carritoLocalStorage'); */
+    },
   },
 };
 </script>

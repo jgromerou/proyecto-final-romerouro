@@ -4,8 +4,11 @@ export default {
   state: {
     alert: false,
     alert_error: false,
+    error_item_repeated: false,
+    pedido_ok: false,
     carts: [],
     items: [],
+    pedidos: [],
   },
   mutations: {
     OBTENER_CARRITO(state, payload) {
@@ -26,6 +29,20 @@ export default {
       localStorage.setItem('carrito', JSON.stringify(state.items));
     },
 
+    AGREGAR_PEDIDO(state, payload) {
+      state.pedidos.push(payload);
+    },
+
+    DELETE_CARRITO(state, index) {
+      state.items.splice(index, 1);
+      localStorage.setItem('carrito', JSON.stringify(state.items));
+    },
+
+    DELETE_ALL_CARRITO(state) {
+      state.items = [];
+      localStorage.setItem('carrito', JSON.stringify(state.items));
+    },
+
     SHOW_ALERT(state) {
       state.alert = true;
       setTimeout(() => {
@@ -37,6 +54,19 @@ export default {
       state.alert_error = true;
       setTimeout(() => {
         state.alert = false;
+      }, 3000);
+    },
+
+    SHOW_ERROR_ITEM_REPEATED(state) {
+      state.error_item_repeated = true;
+      setTimeout(() => {
+        state.error_item_repeated = false;
+      }, 3000);
+    },
+    SHOW_PEDIDO_OK(state) {
+      state.pedido_ok = true;
+      setTimeout(() => {
+        state.pedido_ok = false;
       }, 3000);
     },
   },
@@ -135,7 +165,28 @@ export default {
       context.commit('INSERT_CARRITO', producto);
       context.commit('SHOW_ALERT');
     },
+    //remover index del carrito
+    removerCarrito(context, index) {
+      context.commit('DELETE_CARRITO', index);
+    },
 
+    vaciarCarrito(context) {
+      context.commit('DELETE_ALL_CARRITO');
+    },
+    errorItemRepeated(context) {
+      context.commit('SHOW_ERROR_ITEM_REPEATED');
+    },
+    agregarPedido(context, payload) {
+      axios
+        .post(`https://61e45b6b1a976f00176ee447.mockapi.io/pedidos`, payload)
+        .then(() => {
+          context.commit('AGREGAR_PEDIDO', payload);
+          context.commit('SHOW_PEDIDO_OK');
+        })
+        .catch((err) => {
+          console.error(`${err}`);
+        });
+    },
     /*  checkout(context, payload) {
             console.log(payload, `here`);
             axios({
@@ -150,9 +201,34 @@ export default {
               context.dispatch('fetchCart');
             });
           }, */
+
+    /* checkout(context, payload) {
+      console.log(payload, `here`);
+      axios({
+        url: 'http://localhost:3000/cart/checkout',
+        method: 'put',
+        headers: {
+          token: localStorage.token,
+        },
+      })
+        .then(({ data }) => {
+          console.log(data, `here in store`);
+          Swal.fire('Success!', 'Checkout Success.', 'success');
+          context.dispatch('fetchCart');
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.error[0],
+          });
+        });
+    }, */
   },
   getters: {
     alert: (state) => state.alert,
     items: (state) => state.items,
+    error_item_repeated: (state) => state.error_item_repeated,
+    pedido_ok: (state) => state.pedido_ok,
   },
 };

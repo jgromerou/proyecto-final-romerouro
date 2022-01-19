@@ -17,7 +17,7 @@
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       :clipped-right="$vuetify.breakpoint.mdAndUp"
       app
-      color="#0D47A1"
+      color="#000"
       dark
     >
       <v-container class="d-flex align-center justify-space-between">
@@ -32,6 +32,12 @@
             class="hidden-sm-and-down font-weight-black"
             to="/"
           ></router-link>
+        </v-toolbar-title>
+
+        <v-toolbar-title>
+          <router-link to="/">
+            <v-img src="/assets/images/logo.jpg" class="logo"></v-img>
+          </router-link>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -57,7 +63,7 @@
           <v-icon small v-else>fas fa-shopping-bag</v-icon>
         </v-btn>
 
-        <div class="d-none d-sm-block ml-6">
+        <div class="d-sm-block ml-6">
           <v-btn :to="{ name: 'UsuarioEditar' }" v-if="isLogin">
             <v-icon left>mdi-account</v-icon>
             {{ usuario.email }}
@@ -146,10 +152,11 @@ export default {
 
 <style>
 .title {
-  color: #0d47a1;
+  color: #003;
 }
 .logo {
-  height: 40px;
+  height: auto;
+  width: 45px;
   align-items: center;
 }
 .badge-carrito {
