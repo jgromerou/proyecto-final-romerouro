@@ -70,7 +70,7 @@
 import Navbar from '../components/Navbar';
 import Card from '../components/productCard';
 
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 export default {
   name: 'Home',
   components: {
@@ -102,13 +102,13 @@ export default {
       };
     },
     loginStatus() {
-      return this.$store.state.isLogin;
+      return this.$store.getters.usuario.isLogin;
     },
     /* productos() {
       return this.$store.state.productos;
     }, */
     buscarProductos() {
-      return this.$store.state.productos.productos.filter((p) => {
+      return this.$store.getters.productos.filter((p) => {
         return p.nombre.toLowerCase().indexOf(this.buscar.toLowerCase()) != -1;
       });
     },
@@ -121,6 +121,7 @@ export default {
     ...mapState({
       isLogin: (state) => state.isLogin,
     }),
+    ...mapGetters(['isLogin']),
     /* ...mapState({
       productos: (state) => state.productos,
       //cargandoCarrito: (state) => state.cargandoCarrito,
@@ -129,7 +130,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('obtenerProductos');
-    this.$store.dispatch('obtenerCarrito');
+    //this.$store.dispatch('obtenerCarrito');
   },
 };
 </script>
