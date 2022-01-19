@@ -18,16 +18,15 @@
       :disabled="disabled"
       required
     ></v-text-field>
-    <v-text-field
+    <v-select
       v-if="usuario.rol === 'Administrador'"
       v-model="usuario.rol"
-      :rules="rules.required"
-      label="Rol"
-      type="text"
-      maxlength="80"
+      :rules="rules.rol"
+      :items="roles"
+      label="Standard"
       :disabled="disabled"
-      required
-    ></v-text-field>
+      dense
+    ></v-select>
     <div class="flex-center mt-4">
       <v-btn
         class="btn-login pa-6"
@@ -49,6 +48,7 @@ export default {
       valido: false,
       viewPass: false,
       logueado: false,
+      roles: ['Administrador', 'Cliente'],
     };
   },
 
