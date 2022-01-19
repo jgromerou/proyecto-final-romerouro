@@ -19,6 +19,7 @@
       required
     ></v-text-field>
     <v-text-field
+      v-if="usuario.rol === 'Administrador'"
       v-model="usuario.rol"
       :rules="rules.required"
       label="Rol"
