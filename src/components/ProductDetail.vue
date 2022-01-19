@@ -133,6 +133,7 @@ export default {
       console.log('aaaa');
       if (existingItem) {
         this.$store.dispatch('errorItemRepeated');
+        this.dialog = false;
       } else {
         console.log(this.product, `producto a agregar`);
         const newProduct = { ...this.product, cantidadcarrito: 1 };
@@ -141,6 +142,7 @@ export default {
         this.$store.dispatch('agregarCarrito', newProduct);
         /*   console.log(newItem);
         oldItems.push(newItem); */
+        this.dialog = false;
       }
 
       /* localStorage.setItem('carrito', JSON.stringify(oldItems));

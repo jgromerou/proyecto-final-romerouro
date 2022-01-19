@@ -96,6 +96,7 @@ export default {
         //this.$emit('authenticated', true);
 
         const newAdmin = {
+          id: 1,
           email: this.email,
           password: this.password,
           token: this.email + this.password,
@@ -106,6 +107,7 @@ export default {
         //this.$emit('authenticatedCliente', true);
         // this.$router.replace({ name: 'Home' });
         const newCliente = {
+          id: 2,
           email: this.email,
           password: this.password,
           token: this.email + this.password,

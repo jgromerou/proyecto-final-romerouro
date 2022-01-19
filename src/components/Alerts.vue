@@ -15,6 +15,11 @@
         El item ya está en el carrito!
       </v-alert>
     </transition>
+    <transition name="fade" mode="out-in">
+      <v-alert type="success" class="custom-alert" v-show="pedido_ok" key="1">
+        Se generó el pedido!
+      </v-alert>
+    </transition>
     <!--
     <transition name="fade" mode="out-in">
       <v-alert type="success" class="custom-alert" v-show="userUpdate" key="1">
@@ -54,8 +59,14 @@ export default {
       alert_warning: (state) => state.alert_warning,
       alert: (state) => state.alert,
       error_item_repeated: (state) => state.error_item_repeated,
+      pedido_ok: (state) => state.pedido_ok,
     }),
-    ...mapGetters(['alert_warning', 'alert', 'error_item_repeated']),
+    ...mapGetters([
+      'alert_warning',
+      'alert',
+      'error_item_repeated',
+      'pedido_ok',
+    ]),
   },
 };
 </script>

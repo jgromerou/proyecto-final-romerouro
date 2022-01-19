@@ -163,14 +163,14 @@
               </v-row>
             </v-card-text>
           </v-card>
-          <div class="my-4 row">
+          <div class="my-2 row">
             <v-col class="col-6 p-2">
               <v-btn
                 color="success"
                 x-large
                 width="100%"
                 class="col-8 mx-auto"
-                @click="checkout"
+                @click="finalizarPedido"
               >
                 Finalizar
               </v-btn>
@@ -217,6 +217,14 @@ export default {
       drawerOpen: this.open,
       reload: false,
       selected: 1,
+      newpedido: {
+        userid: '',
+        productos: [],
+        entregado: false,
+        fecha: '',
+        total: '',
+      },
+      /* carrito: [], */
     };
   },
   watch: {
@@ -231,8 +239,53 @@ export default {
       this.$emit('drawer-opened', isOpen);
       console.log('onInput: ' + isOpen);
     },
-    checkout() {
+    /* setCarrito() {
+      if (localStorage.getItem('carrito')) {
+        this.carrito = JSON.parse(localStorage.getItem('carrito'));
+      }
+    }, */
+
+    /* checkout() {
       this.$store.dispatch('checkout');
+    }, */
+    finalizarPedido() {
+      const idUser = JSON.parse(localStorage.getItem('Usuario')).id;
+      let pedidoTotal = 0;
+
+      console.log('userid', JSON.parse(localStorage.getItem('Usuario')).id);
+
+      this.newpedido.userid = idUser;
+      this.newpedido.fecha = new Date();
+      this.items.forEach((index) => {
+        console.log('carrito para push', index);
+        console.log('nombre de producto en carrito', index.nombre);
+        this.newpedido.productos.push({
+          nombre: index.nombre,
+          cantidadcarrito: index.cantidadcarrito,
+          precio: index.precio,
+        });
+        pedidoTotal += index.precio * index.cantidadcarrito;
+      });
+      this.newpedido.total = pedidoTotal;
+
+      console.log('el newpedido es:', this.newpedido);
+
+      this.$store.dispatch('agregarPedido', this.newpedido);
+
+      this.vaciarNewPedido();
+      this.vaciarCarrito();
+      //this.vaciarCarrito();
+
+      this.$emit('drawer-opened', false);
+    },
+    vaciarNewPedido() {
+      this.newpedido = {
+        userid: '',
+        productos: [],
+        entregado: false,
+        fecha: '',
+        total: '',
+      };
     },
     agregarCantidad(id, cantidad) {
       this.reload = true;
@@ -341,7 +394,10 @@ export default {
     },
   },
   /*  mounted() {
-    this.$store.dispatch('obtenerCarrito');
+    this.$nextTick(function () {
+      this.setCarrito();
+      console.log('carrito', this.carrito);
+    });
   }, */
 };
 </script>
