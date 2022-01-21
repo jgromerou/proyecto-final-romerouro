@@ -92,6 +92,8 @@ Ver listado de Pedidos.
 
 - Profesor: Conrado Cañas
 
+- Tutor: Rosales
+
 - Estudiante: Romero Uro
 
 # -------------------------------------------------------------------------
