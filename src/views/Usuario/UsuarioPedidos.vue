@@ -41,6 +41,9 @@
       :key="pedido.id"
       :pedido="pedido"
     ></PedidoCard>
+    <div v-if="buscarPedidos.length == 0">
+      <v-label color="#0d47a1"> No hay pedidos</v-label>
+    </div>
   </div>
 </template>
 
@@ -81,4 +84,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.v-label {
+  font-size: 40px !important;
+}
+</style>

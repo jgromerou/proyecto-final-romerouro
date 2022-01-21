@@ -111,7 +111,7 @@ export default {
   justify-content: center;
   align-items: center;
   flex-flow: column;
-
+  color: #fff;
   .form-usuario {
     width: 100%;
     max-width: 700px;
