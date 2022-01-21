@@ -87,11 +87,12 @@ Agregar Pedido.
 
 Ver listado de Pedidos.
 
-# -------------------------------------------------------------------------
 
-Trabajo Final
-Profesor: Conrado Cañas
-Estudiante: Romero Uro
+# Trabajo Final
+
+- Profesor: Conrado Cañas
+
+- Estudiante: Romero Uro
 
 # -------------------------------------------------------------------------
 
