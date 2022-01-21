@@ -121,11 +121,11 @@ export default {
   margin: 80px;
 }
 .form-signin {
-  max-width: 380px;
+  max-width: 1000px;
   margin: 0 auto;
-
+  background-color: #000;
   padding: 15px 40px 50px;
-
+  border: 1px solid #000;
   border-radius: 10px;
 }
 .form-signin input[type='text'],
