@@ -14,7 +14,7 @@
       <div class="col banner-img">
         <img
           class="center"
-          src="https://images.pexels.com/photos/3687999/pexels-photo-3687999.jpeg?cs=srgb&dl=pexels-mehrad-vosoughi-3687999.jpg&fm=jpg"
+          src="https://images.pexels.com/photos/1884584/pexels-photo-1884584.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         />
       </div>
     </div>

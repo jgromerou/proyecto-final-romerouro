@@ -55,7 +55,10 @@
                           v-model="imagen"
                           label="Imagen"
                         ></v-text-field>
-                        <p>Agregar imágenes: aves.jpg, logo.jpeg</p>
+                        <p>
+                          Agregar imágenes: menpants.jpg, menpants2.jpg,
+                          shirt.jpg, womanpants.jpg
+                        </p>
                       </v-col>
 
                       <v-col cols="12" sm="6" md="6">
@@ -223,7 +226,7 @@ export default {
       this.nombre = item.nombre;
       this.cantidad = item.cantidad;
       this.precio = item.precio;
-
+      this.imagen = item.imagen;
       this.dialog = true;
       this.editedIndex = 1;
     },
@@ -238,6 +241,7 @@ export default {
       this.id = '';
       this.nombre = '';
       this.cantidad = 0;
+      this.imagen = '';
       this.precio = 0;
       this.valida = 0;
       this.validaMensaje = [];
@@ -290,6 +294,7 @@ export default {
               nombre: this.nombre,
               precio: parseInt(this.precio),
               cantidad: parseInt(this.cantidad),
+              imagen: this.imagen,
             }
             /* configuracion */
           )
