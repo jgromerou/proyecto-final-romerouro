@@ -13,7 +13,7 @@ export default {
   mutations: {
     OBTENER_CARRITO(state, payload) {
       state.carts = payload;
-      console.log(this.state.carts, `state carrito mutation`);
+      //console.log(this.state.carts, `state carrito mutation`);
       //router.push({ name: 'Cart'})
     },
 
@@ -80,7 +80,7 @@ export default {
               }, */
       })
         .then(({ data }) => {
-          console.log(data.carts, `<<< accion obtenerCarrito`);
+          //console.log(data.carts, `<<< accion obtenerCarrito`);
           context.commit('OBTENER_CARRITO', data);
         })
         .catch(() => {
@@ -119,8 +119,8 @@ export default {
         data: {
           cantidad: payload.nCantidad,
         },
-      }).then(({ data }) => {
-        console.log('Item sumado 1 en Carrito', data);
+      }).then(() => {
+        //console.log('Item sumado 1 en Carrito', data);
         context.dispatch('obtenerCarrito');
       });
     },
@@ -134,8 +134,8 @@ export default {
         data: {
           cantidad: payload.nCantidad,
         },
-      }).then(({ data }) => {
-        console.log('Item restado 1 en Carrito', data);
+      }).then(() => {
+        //console.log('Item restado 1 en Carrito', data);
         context.dispatch('obtenerCarrito');
       });
     },

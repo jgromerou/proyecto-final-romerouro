@@ -7,7 +7,7 @@ export default {
   mutations: {
     OBTENER_PEDIDOS(state, payload) {
       state.pedidos = payload;
-      console.log(this.state.pedidos, `state pedido mutation`);
+      // console.log(this.state.pedidos, `state pedido mutation`);
       //router.push({name: 'Home'})
     },
   },
@@ -18,7 +18,7 @@ export default {
         method: 'get',
       })
         .then(({ data }) => {
-          console.log(data, `dispatch accion obtenerPedidos`);
+          // console.log(data, `dispatch accion obtenerPedidos`);
           context.commit('OBTENER_PEDIDOS', data);
         })
         .catch((err) => {

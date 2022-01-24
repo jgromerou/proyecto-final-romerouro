@@ -31,7 +31,6 @@ export default {
     },
     SET_USUARIO(state, payload) {
       state.usuario = payload;
-      console.log('usuario', payload);
     },
     REGISTER() {
       router.push({ name: 'Home' }).catch(() => {});
@@ -69,25 +68,25 @@ export default {
       commit('LOGIN');
     },
     login(context, payload) {
-      console.log(payload, `login de usuario actions`);
+      //console.log(payload, `login de usuario actions`);
       /* axios({
         url: 'http://localhost:3000/login',
         method: 'post',
         data: payload,
       }) */
-      console.log(payload, `login usuario`);
+      //console.log(payload, `login usuario`);
       localStorage.setItem('token', payload.token);
       localStorage.setItem('Email', payload.email);
       context.commit('LOGIN');
     },
     register(context, payload) {
-      console.log(payload, `registro de usuario actions`);
+      // console.log(payload, `registro de usuario actions`);
       axios({
         url: 'https://61e45b6b1a976f00176ee447.mockapi.io/usuarios',
         method: 'post',
         data: payload,
-      }).then((data) => {
-        console.log(`registrado correctamente:`, data.data);
+      }).then(() => {
+        // console.log(`registrado correctamente:`, data.data);
 
         /*   localStorage.setItem('token', payload.token);
         localStorage.setItem('Email', payload.email); */
@@ -98,11 +97,11 @@ export default {
       if (localStorage.token) {
         context.commit('LOGUEADO');
         let usuario = JSON.parse(localStorage.getItem('Usuario'));
-        console.log(usuario, 'loginCheck');
+        // console.log(usuario, 'loginCheck');
         if (usuario) {
           //context.commit('setToken', usuario);
           context.commit('SET_USUARIO', usuario);
-          console.log('usuario', usuario);
+          // console.log('usuario', usuario);
         }
         router.push({ name: 'Home' }).catch(() => {});
       } else {
