@@ -34,10 +34,9 @@
           </v-list>
         </v-col>
         <v-col class="col-12 col-md-8 col-lg-9">
+          <h2>{{ seleccionado.texto }}</h2>
+          <p>{{ seleccionado.descripcion }}</p>
           <div class="configuraciones">
-            <h2>{{ seleccionado.texto }}</h2>
-            <p>{{ seleccionado.descripcion }}</p>
-
             <router-view></router-view>
           </div>
         </v-col>
@@ -58,12 +57,14 @@ export default {
       itemSeleccionado: 0,
       items: [
         {
+          id: 0,
           texto: 'Datos de Usuario',
           descripcion: 'Agregar información sobre Usted',
           icon: 'mdi-account',
           route: 'UsuarioEditar',
         },
         {
+          id: 1,
           texto: 'Histórico de Pedidos',
           descripcion: 'Verificar todas las compras echa por Usted',
           icon: 'mdi-shopping',

@@ -230,14 +230,14 @@ export default {
   watch: {
     open(newVal) {
       this.drawerOpen = newVal;
-      console.log('open: ' + this.drawerOpen);
+      //console.log('open: ' + this.drawerOpen);
     },
   },
   methods: {
     ...mapActions(['vaciarCarrito']),
     onInput(isOpen) {
       this.$emit('drawer-opened', isOpen);
-      console.log('onInput: ' + isOpen);
+      //console.log('onInput: ' + isOpen);
     },
     /* setCarrito() {
       if (localStorage.getItem('carrito')) {
@@ -252,13 +252,13 @@ export default {
       const idUser = JSON.parse(localStorage.getItem('Usuario')).id;
       let pedidoTotal = 0;
 
-      console.log('userid', JSON.parse(localStorage.getItem('Usuario')).id);
+      //console.log('userid', JSON.parse(localStorage.getItem('Usuario')).id);
 
       this.newpedido.userid = idUser;
       this.newpedido.fecha = new Date();
       this.items.forEach((index) => {
-        console.log('carrito para push', index);
-        console.log('nombre de producto en carrito', index.nombre);
+        //console.log('carrito para push', index);
+        //console.log('nombre de producto en carrito', index.nombre);
         this.newpedido.productos.push({
           nombre: index.nombre,
           cantidadcarrito: index.cantidadcarrito,
@@ -268,7 +268,7 @@ export default {
       });
       this.newpedido.total = pedidoTotal;
 
-      console.log('el newpedido es:', this.newpedido);
+      //console.log('el newpedido es:', this.newpedido);
 
       this.$store.dispatch('agregarPedido', this.newpedido);
 
@@ -292,7 +292,7 @@ export default {
       //let cantidad = this.cart.cantidad;
       //let id = this.cart.id;
       cantidad++;
-      console.log(cantidad);
+      //console.log(cantidad);
       const newCantidad = {
         nId: id,
         nCantidad: cantidad,
@@ -307,7 +307,7 @@ export default {
       //let cantidad = this.cart.cantidad;
       //let id = this.cart.id;
       cantidad--;
-      console.log(cantidad);
+      //console.log(cantidad);
       const newCantidad = {
         nId: id,
         nCantidad: cantidad,
@@ -324,7 +324,6 @@ export default {
       const oldItems = JSON.parse(localStorage.getItem('carrito')) || [];
       const idToUse = item.id;
       const existingItem = oldItems.find(({ id }) => id === idToUse);
-      console.log('aaaa');
       if (existingItem) {
         Object.assign(existingItem, {
           nombre: item.nombre,
@@ -333,8 +332,8 @@ export default {
           precio: item.precio,
           imagen: item.imagen,
         });
-        console.log(existingItem);
-        console.log(item.nombre, cantidad);
+        //console.log(existingItem);
+        //console.log(item.nombre, cantidad);
       } else {
         const newItem = {
           id: idToUse,
@@ -344,7 +343,7 @@ export default {
           precio: item.precio,
           imagen: item.imagen,
         };
-        console.log(newItem);
+        //console.log(newItem);
         oldItems.push(newItem);
       }
 
@@ -353,7 +352,7 @@ export default {
     },
     removerCarrito(index) {
       this.$store.dispatch('removerCarrito', index);
-      console.log(index);
+      //console.log(index);
     },
   },
   computed: {
@@ -384,7 +383,7 @@ export default {
       let precioInicial = 0;
       let precioTotal = 0;
       //   let carts = this.$store.state.carts
-      console.log(this.items, `carrito inicial`);
+      //console.log(this.items, `carrito inicial`);
       for (let i = 0; i < this.items.length; i++) {
         precioInicial += this.items[i].precio * this.items[i].cantidadcarrito;
       }

@@ -62,6 +62,9 @@
           </div>
         </div>
       </div>
+      <div class="my-6 container">
+        <Footer />
+      </div>
     </div>
   </v-container>
 </template>
@@ -69,13 +72,14 @@
 <script>
 import Navbar from '../components/Navbar';
 import Card from '../components/productCard';
-
+import Footer from '../components/Footer.vue';
 import { mapState, mapGetters } from 'vuex';
 export default {
   name: 'Home',
   components: {
     Navbar,
     Card,
+    Footer,
   },
   data() {
     return {

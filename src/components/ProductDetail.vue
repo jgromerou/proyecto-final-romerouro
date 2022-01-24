@@ -130,14 +130,13 @@ export default {
       const oldItems = JSON.parse(localStorage.getItem('carrito')) || [];
       const idToUse = item.id;
       const existingItem = oldItems.find(({ id }) => id === idToUse);
-      console.log('aaaa');
       if (existingItem) {
         this.$store.dispatch('errorItemRepeated');
         this.dialog = false;
       } else {
-        console.log(this.product, `producto a agregar`);
+        //console.log(this.product, `producto a agregar`);
         const newProduct = { ...this.product, cantidadcarrito: 1 };
-        console.log('nuevo producto', newProduct);
+        //console.log('nuevo producto', newProduct);
         //this.$store.dispatch('agregarProductoCarrito', this.product);
         this.$store.dispatch('agregarCarrito', newProduct);
         /*   console.log(newItem);

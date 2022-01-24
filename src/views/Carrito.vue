@@ -112,7 +112,7 @@ export default {
       let precioInicial = 0;
       let precioTotal = 0;
       //   let carts = this.$store.state.carts
-      console.log(this.carts, `carrito inicial`);
+      // console.log(this.carts, `carrito inicial`);
       for (let i = 0; i < this.carts.length; i++) {
         precioInicial += this.carts[i].precio * this.carts[i].cantidad;
       }

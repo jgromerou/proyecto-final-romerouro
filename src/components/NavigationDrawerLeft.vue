@@ -34,6 +34,23 @@
           </v-list-item>
         </v-list-group>
       </template>
+      <template v-if="esAdministrador || esCliente">
+        <v-list-group>
+          <v-list-item slot="activator">
+            <v-list-item>
+              <v-list-item-title> VER PERFIL</v-list-item-title>
+            </v-list-item>
+          </v-list-item>
+          <v-list-item :to="{ name: 'UsuarioEditar' }">
+            <v-list-item-action>
+              <v-icon>table_chart</v-icon>
+            </v-list-item-action>
+            <v-list-item>
+              <v-list-item-title> Mi Perfil </v-list-item-title>
+            </v-list-item>
+          </v-list-item>
+        </v-list-group>
+      </template>
       <!-- <template v-if="esAdministrador || esCliente">
         <v-list-group>
           <v-list-item slot="activator">
@@ -74,13 +91,13 @@ export default {
   watch: {
     open(newVal) {
       this.drawerOpen = newVal;
-      console.log('open: ' + this.drawerOpen);
+      //console.log('open: ' + this.drawerOpen);
     },
   },
   methods: {
     onInput(isOpen) {
       this.$emit('drawer-opened', isOpen);
-      console.log('onInput: ' + isOpen);
+      //console.log('onInput: ' + isOpen);
     },
   },
   computed: {

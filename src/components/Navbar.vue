@@ -113,10 +113,10 @@ export default {
     handleDrawerChange(type, isOpen) {
       if (type == 'left') {
         this.openLeftNavigationDrawer = isOpen;
-        console.log('left');
+        //console.log('left');
       } else {
         this.openRightNavigationDrawer = isOpen;
-        console.log('right');
+        //console.log('right');
       }
     },
   },

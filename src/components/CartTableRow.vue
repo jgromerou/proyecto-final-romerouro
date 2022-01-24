@@ -79,7 +79,7 @@ export default {
       let cantidad = this.cart.cantidad;
       let id = this.cart.id;
       cantidad += 1;
-      console.log(cantidad);
+      //console.log(cantidad);
       const newCantidad = {
         nId: id,
         nCantidad: cantidad,
@@ -94,7 +94,7 @@ export default {
       let cantidad = this.cart.cantidad;
       let id = this.cart.id;
       cantidad -= 1;
-      console.log(cantidad);
+      //console.log(cantidad);
       const newCantidad = {
         nId: id,
         nCantidad: cantidad,

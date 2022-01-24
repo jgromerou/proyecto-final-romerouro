@@ -7,7 +7,7 @@ export default {
   mutations: {
     OBTENER_PRODUCTOS(state, payload) {
       state.productos = payload;
-      console.log(this.state.productos, `state producto mutation`);
+      //console.log(this.state.productos, `state producto mutation`);
       //router.push({name: 'Home'})
     },
   },
@@ -18,7 +18,7 @@ export default {
         method: 'get',
       })
         .then(({ data }) => {
-          console.log(data, `dispatch accion obtenerProductos`);
+          // console.log(data, `dispatch accion obtenerProductos`);
           context.commit('OBTENER_PRODUCTOS', data);
         })
         .catch((err) => {

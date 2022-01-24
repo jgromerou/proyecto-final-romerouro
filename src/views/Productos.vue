@@ -217,8 +217,8 @@ export default {
         },
       };
 
-      axios.put(URL, data, config).then((response) => {
-        console.log('image upload response > ', response);
+      axios.put(URL, data, config).then(() => {
+        //console.log('image upload response > ', response);
       });
     },
     editItem(item) {
@@ -234,7 +234,7 @@ export default {
     eliminarItem(item) {
       this.dialogDelete = true;
       this.id = item.id;
-      console.log(item, `abrir dialog de eliminar item`);
+      // console.log(item, `abrir dialog de eliminar item`);
     },
 
     limpiar() {
