@@ -3,7 +3,7 @@
     <v-footer absolute class="font-weight-medium" color="black">
       <v-col class="text-center" cols="12" style="color: white">
         {{ new Date().getFullYear() }} —
-        <strong>CoderHouse</strong>
+        <strong>CoderHouse Curso Vue JS — Juan Gerardo Romero Uro</strong>
       </v-col>
     </v-footer>
   </v-card>
