@@ -13,7 +13,6 @@ Usuario: a@a.com Password: admin
 # Cliente: 
 Usuario: c@c.com Password: cliente
 
-LIVE - VERSION: https://proyecto-final-romerouro-ofppo.ondigitalocean.app/
 
 # Agregar productos con imagen
 Las imágenes se encuentran en la carpeta public/assets/img para probar agregar productos con nombres que aparecen en el formulario al crear un nuevo producto.
